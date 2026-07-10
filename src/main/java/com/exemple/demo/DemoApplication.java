@@ -5,9 +5,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
 @RestController
+@RequestMapping("/api")
 public class DemoApplication
 {
     public static void  main(String[] args)
@@ -15,8 +21,11 @@ public class DemoApplication
         SpringApplication.run(DemoApplication.class, args);
     }
     @GetMapping("/greet/{name}")
-    public String   greet(@PathVariable String name)
-    {
-        return ("Hello, " + name + "!");
+    public Map<String, String> greet(@PathVariable String name) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Hello, " + name + "!");
+        response.put("name", name);
+        response.put("timestamp", LocalDateTime.now().toString());
+        return (response);
     }
 }
